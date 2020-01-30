@@ -40,7 +40,7 @@ class Server:
 
         return pickle.loads(result)
 
-    def run(self, backlog: Optional[int] = None) -> None:
+    def run(self) -> None:
         try:
             self.socket.bind((self.ip, self.port))
 
@@ -49,7 +49,7 @@ class Server:
 
         else:
             print('Server sucessfully initialized')
-            self.socket.listen(backlog)
+            self.socket.listen()
             print('Server awaiting new connections')
 
             while True:
