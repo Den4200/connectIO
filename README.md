@@ -36,8 +36,7 @@ class ExampleServer(Server):
 
 
 if __name__ == "__main__":
-    server = ExampleServer()
-    server.run()
+    ExampleServer().run()
 ```
 #### Client
 ```py

@@ -1,7 +1,12 @@
+from typing import (
+    Any, 
+    Callable, 
+    Optional
+)
+
 import pickle
 import socket
 import struct
-from typing import Callable, Optional
 
 
 class Server:
@@ -15,7 +20,7 @@ class Server:
         )
         self.func = None
 
-    def send(self, conn, data):
+    def send(self, conn: 'socket.socket', data: Any) -> None:
         packets = pickle.dumps(data)
         value = socket.htonl(len(packets))
         size = struct.pack('L', value)
@@ -23,7 +28,7 @@ class Server:
         conn.send(size)
         conn.send(packets)
 
-    def recieve(self, conn):
+    def recieve(self, conn: 'socket.socket') -> Any:
         size = struct.calcsize('L')
         size = conn.recv(size)
         size = socket.ntohl(struct.unpack('L', size)[0])
@@ -35,7 +40,7 @@ class Server:
 
         return pickle.loads(result)
 
-    def run(self) -> None:
+    def run(self, backlog: Optional[int] = None) -> None:
         try:
             self.socket.bind((self.ip, self.port))
 
@@ -44,7 +49,7 @@ class Server:
 
         else:
             print('Server sucessfully initialized')
-            self.socket.listen()
+            self.socket.listen(backlog)
             print('Server awaiting new connections')
 
             while True:
