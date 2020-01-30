@@ -5,7 +5,7 @@ with open("README.md", "r") as f:
 
 setuptools.setup(
     name="connectIO", # Replace with your own username
-    version="0.0.2",
+    version="0.0.3",
     author="Dennis Pham",
     author_email="dpham.42@hotmail.com",
     description="A simple module for sending data across the internet!",

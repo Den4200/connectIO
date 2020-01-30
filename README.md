@@ -36,7 +36,7 @@ class ExampleServer(Server):
         response = 'great you?'
         print(f'Server -> {raddr}: {response}')
 
-        resp2 = self.send(conn, response)
+        self.send(conn, response)
         print(f'{raddr} -> Server: {self.recieve(conn)}')
 
 
@@ -52,11 +52,20 @@ def main():
     client.connect()
 
     resp1 = client.recieve()
-    resp2 = client.send('hi server! how are you?')
-    resp3 = client.send('great thanks!')
+    print(f'From server: {resp1}')
+
+    msg1 = 'hi server! how are you?'
+    client.send(msg1)
+    print(f'To server: {msg1}')
+
+    resp2 = client.recieve()
+    print(f'From server: {resp2}')
+
+    msg2 = 'great thanks!'
+    client.send(msg2)
+    print(f'To server: {msg2}')
 
     client.close()
-
 
 if __name__ == "__main__":
     main()
