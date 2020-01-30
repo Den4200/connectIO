@@ -4,7 +4,7 @@ with open("README.md", "r") as f:
     long_description = f.read()
 
 setuptools.setup(
-    name="connectIO", # Replace with your own username
+    name="connectIO",
     version="0.0.3",
     author="Dennis Pham",
     author_email="dpham.42@hotmail.com",
