@@ -1,15 +1,10 @@
-# ConnectIO
-A simple module for sending data across the internet!
+from sys import path
+from os.path import dirname
 
-## Use cases
-- Multiplayer pygame games (sending objects)
-- Chat server with clients
-- Transferring files over a network
-- Anything else you can think of!
+path.append(dirname(path[0]))
+__package__ = 'example'
 
-## Simple Example
-#### Server
-```python
+
 from connectIO import Server, threaded
 
 class ExampleServer(Server):
@@ -34,26 +29,6 @@ class ExampleServer(Server):
         resp2 = self.send(conn, response)
         print(f'{raddr} -> Server: {self.recieve(conn)}')
 
-
 if __name__ == "__main__":
     server = ExampleServer()
     server.run()
-```
-#### Client
-```py
-from connectIO import Client
-
-def main():
-    client = Client()
-    client.connect()
-
-    resp1 = client.recieve()
-    resp2 = client.send('hi server! how are you?')
-    resp3 = client.send('great thanks!')
-
-    client.close()
-
-
-if __name__ == "__main__":
-    main()
-```

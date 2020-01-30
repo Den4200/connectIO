@@ -17,6 +17,9 @@ class Client:
     def connect(self) -> None:
         self.socket.connect(self.addr)
 
+    def close(self) -> None:
+        self.socket.close()
+
     def recieve(self):
         size = struct.calcsize('L')
         size = self.socket.recv(size)

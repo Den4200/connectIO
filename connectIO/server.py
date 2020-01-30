@@ -1,14 +1,41 @@
+import pickle
+import socket
+import struct
 from typing import Callable, Optional
 
-from .client import Client
 
-
-class Server(Client):
+class Server:
 
     def __init__(self, ip: str = '127.0.0.1', port: int = 5555) -> None:
-        super(Server, self).__init__(ip, port)
+        self.ip = ip
+        self.port = port
+        self.socket = socket.socket(
+            socket.AF_INET, 
+            socket.SOCK_STREAM
+        )
+        self.func = None
 
-    def run(self, func: Optional[Callable] = None) -> None:
+    def send(self, conn, data):
+        packets = pickle.dumps(data)
+        value = socket.htonl(len(packets))
+        size = struct.pack('L', value)
+
+        conn.send(size)
+        conn.send(packets)
+
+    def recieve(self, conn):
+        size = struct.calcsize('L')
+        size = conn.recv(size)
+        size = socket.ntohl(struct.unpack('L', size)[0])
+
+        result = b''
+
+        while len(result) < size:
+            result += conn.recv(size - len(result))
+
+        return pickle.loads(result)
+
+    def run(self) -> None:
         try:
             self.socket.bind((self.ip, self.port))
 
@@ -21,8 +48,12 @@ class Server(Client):
             print('Server awaiting new connections')
 
             while True:
-                conn, addr = self.socket.accept()
-                print(f'Connection established to {addr}')
+                try:
+                    conn, addr = self.socket.accept()
+                    print(f'Connection established to {addr}')
 
-                if func is not None:
-                    func(conn, addr)
+                    if self.func is not None:
+                        self.func(conn, addr)
+
+                except KeyboardInterrupt:
+                    break
