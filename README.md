@@ -3,7 +3,7 @@ A simple module for sending data across the internet!
 
 ## Use cases
 - Multiplayer pygame games (sending objects)
-- Chat server with clients
+- Chat server with multiple clients
 - Transferring files over a network
 - Anything else you can think of!
 
