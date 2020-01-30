@@ -7,6 +7,11 @@ A simple module for sending data across the internet!
 - Transferring files over a network
 - Anything else you can think of!
 
+## Installation
+```cmd
+pip install connectIO
+```
+
 ## Simple Example
 #### Server
 ```python
